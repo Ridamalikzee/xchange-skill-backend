@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chat_participants",
+  "info": {
+    "name": "chat-participant",
+    "description": "ChatParticipant - represents users participating in a chat"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user.user"
+    },
+    "chat": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chat.chat",
+      "inversedBy": "participants"
+    },
+    "role": {
+      "type": "enumeration",
+      "enum": ["admin", "member"],
+      "default": "member"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}

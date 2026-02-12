@@ -1,0 +1,89 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_requests",
+  "info": {
+    "name": "service-request",
+    "description": "ServiceRequest - stores booking or service requests between users"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "scope": {
+      "type": "text",
+      "required": true
+    },
+    "requestedTime": {
+      "type": "datetime",
+      "required": true
+    },
+    "duration": {
+      "type": "integer",
+      "required": true
+    },
+    "serviceMode": {
+      "type": "enumeration",
+      "enum": ["REMOTE", "ONSITE", "HYBRID"],
+      "required": true
+    },
+    "serviceLocation": {
+      "type": "text"
+    },
+    "respondedAt": {
+      "type": "datetime"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["PENDING", "APPROVED", "REJECTED"],
+      "default": "PENDING"
+    },
+    "responseNote": {
+      "type": "text"
+    },
+    "expiresAt": {
+      "type": "datetime"
+    },
+    "skill": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::skill.skill",
+      "inversedBy": "serviceRequests"
+    },
+    "requester": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user.user",
+      "inversedBy": "serviceRequestsRequested"
+    },
+    "provider": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::user.user",
+      "inversedBy": "serviceRequestsProvided"
+    },
+    "reviews": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::review.review",
+      "mappedBy": "bookingRequest"
+    },
+    "reports": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::report.report",
+      "mappedBy": "bookingRequest"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}
