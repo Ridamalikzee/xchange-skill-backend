@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "chats",
   "info": {
+    "singularName": "chat",
+    "pluralName": "chats",
+    "displayName": "Chat",
     "name": "chat",
     "description": "Chat - represents a chat session between users"
   },

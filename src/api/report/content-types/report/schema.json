@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "reports",
   "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Report",
     "name": "report",
     "description": "Report - stores reports submitted by users for inappropriate behavior"
   },
@@ -26,12 +29,12 @@
     "reporter": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user"
+      "target": "plugin::users-permissions.user"
     },
     "reportedUser": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user"
+      "target": "plugin::users-permissions.user"
     },
     "bookingRequest": {
       "type": "relation",

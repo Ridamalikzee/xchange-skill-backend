@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "reviews",
   "info": {
+    "singularName": "review",
+    "pluralName": "reviews",
+    "displayName": "Review",
     "name": "review",
     "description": "Review - stores ratings and reviews submitted by users"
   },
@@ -23,14 +26,12 @@
     "reviewer": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user",
-      "inversedBy": "reviewsGiven"
+      "target": "plugin::users-permissions.user"
     },
     "reviewee": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user",
-      "inversedBy": "reviewsReceived"
+      "target": "plugin::users-permissions.user"
     },
     "skill": {
       "type": "relation",

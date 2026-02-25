@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "blocks",
   "info": {
+    "singularName": "block",
+    "pluralName": "blocks",
+    "displayName": "Block",
     "name": "block",
     "description": "Block - stores user-to-user blocking relationships"
   },
@@ -14,12 +17,12 @@
     "blocker": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user"
+      "target": "plugin::users-permissions.user"
     },
     "blocked": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user"
+      "target": "plugin::users-permissions.user"
     },
     "createdBy": {
       "type": "relation",

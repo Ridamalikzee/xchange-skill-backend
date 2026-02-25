@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "service_requests",
   "info": {
+    "singularName": "service-request",
+    "pluralName": "service-requests",
+    "displayName": "Service Request",
     "name": "service-request",
     "description": "ServiceRequest - stores booking or service requests between users"
   },
@@ -54,14 +57,12 @@
     "requester": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user",
-      "inversedBy": "serviceRequestsRequested"
+      "target": "plugin::users-permissions.user"
     },
     "provider": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user",
-      "inversedBy": "serviceRequestsProvided"
+      "target": "plugin::users-permissions.user"
     },
     "reviews": {
       "type": "relation",

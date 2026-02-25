@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "roles",
   "info": {
+    "singularName": "role",
+    "pluralName": "roles",
+    "displayName": "Role",
     "name": "role",
     "description": "Role - system roles for access control and permissions"
   },
@@ -22,7 +25,7 @@
     "users": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::user.user",
+      "target": "plugin::users-permissions.user",
       "mappedBy": "role"
     },
     "createdBy": {

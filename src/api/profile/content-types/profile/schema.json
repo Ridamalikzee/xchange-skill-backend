@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "profiles",
   "info": {
+    "singularName": "profile",
+    "pluralName": "profiles",
+    "displayName": "Profile",
     "name": "profile",
     "description": "User profile - stores extended profile information"
   },
@@ -26,8 +29,7 @@
     "user": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::user.user",
-      "inversedBy": "profile"
+      "target": "plugin::users-permissions.user"
     },
     "createdBy": {
       "type": "relation",

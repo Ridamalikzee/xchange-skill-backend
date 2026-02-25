@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "chat_participants",
   "info": {
+    "singularName": "chat-participant",
+    "pluralName": "chat-participants",
+    "displayName": "Chat Participant",
     "name": "chat-participant",
     "description": "ChatParticipant - represents users participating in a chat"
   },
@@ -14,7 +17,7 @@
     "user": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user"
+      "target": "plugin::users-permissions.user"
     },
     "chat": {
       "type": "relation",

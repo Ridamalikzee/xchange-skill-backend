@@ -2,6 +2,9 @@
   "kind": "collectionType",
   "collectionName": "skills",
   "info": {
+    "singularName": "skill",
+    "pluralName": "skills",
+    "displayName": "Skill",
     "name": "skill",
     "description": "Skill - represents a skill offered by a user"
   },
@@ -30,8 +33,7 @@
     "user": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::user.user",
-      "inversedBy": "skills"
+      "target": "plugin::users-permissions.user"
     },
     "serviceRequests": {
       "type": "relation",
