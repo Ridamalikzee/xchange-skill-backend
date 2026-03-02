@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "roles",
+  "info": {
+    "singularName": "role",
+    "pluralName": "roles",
+    "displayName": "Role",
+    "name": "role",
+    "description": "Role - system roles for access control and permissions"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "role"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}

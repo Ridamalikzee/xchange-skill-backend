@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reports",
+  "info": {
+    "singularName": "report",
+    "pluralName": "reports",
+    "displayName": "Report",
+    "name": "report",
+    "description": "Report - stores reports submitted by users for inappropriate behavior"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "reason": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["PENDING", "REVIEWED", "RESOLVED"],
+      "default": "PENDING"
+    },
+    "reporter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "reportedUser": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "bookingRequest": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-request.service-request",
+      "inversedBy": "reports"
+    },
+    "message": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::message.message",
+      "inversedBy": "reports"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}

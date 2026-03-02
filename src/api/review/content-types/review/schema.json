@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reviews",
+  "info": {
+    "singularName": "review",
+    "pluralName": "reviews",
+    "displayName": "Review",
+    "name": "review",
+    "description": "Review - stores ratings and reviews submitted by users"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "rating": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "max": 5
+    },
+    "comment": {
+      "type": "text"
+    },
+    "reviewer": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "reviewee": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "skill": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::skill.skill",
+      "inversedBy": "reviews"
+    },
+    "bookingRequest": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-request.service-request",
+      "inversedBy": "reviews"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}

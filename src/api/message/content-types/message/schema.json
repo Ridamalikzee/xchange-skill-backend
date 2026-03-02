@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "messages",
+  "info": {
+    "singularName": "message",
+    "pluralName": "messages",
+    "displayName": "Message",
+    "name": "message",
+    "description": "Message - stores individual messages exchanged in a chat"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "sender": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "chat": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chat.chat",
+      "inversedBy": "messages"
+    },
+    "reports": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::report.report",
+      "mappedBy": "message"
+    },
+    "createdBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    },
+    "updatedBy": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "admin::user"
+    }
+  }
+}
