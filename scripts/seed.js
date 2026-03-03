@@ -1,5 +1,7 @@
 'use strict';
 
+let strapi; // will be assigned when the app is loaded
+
 async function seedApp() {
   const shouldImportSeedData = await isFirstRun();
 
@@ -8,6 +10,7 @@ async function seedApp() {
       console.log('Setting up Strapi with basic permissions...');
       await setPublicPermissions({
         skill: ['find', 'findOne'],
+        'base-skill': ['find'],
         'service-request': ['find', 'findOne'],
         category: ['find', 'findOne'],
         role: ['find', 'findOne'],
@@ -23,6 +26,13 @@ async function seedApp() {
     }
   } else {
     console.log('✓ Already initialized. Strapi ready!');
+    // ensure base-skill permission exists even on subsequent runs
+    try {
+      await setPublicPermissions({ 'base-skill': ['find'] });
+      console.log('✓ Ensured base-skill permission exists');
+    } catch (error) {
+      console.log('Failed to ensure base-skill permission', error);
+    }
   }
 }
 
@@ -39,9 +49,16 @@ async function isFirstRun() {
 
 async function setPublicPermissions(newPermissions) {
   // Find the ID of the public role
-  const publicRole = await strapi.query('plugin::users-permissions.role').findOne({
+  const publicRole = await strapi.db.query('plugin::users-permissions.role').findOne({
     where: {
       type: 'public',
+    },
+  });
+
+  // also fetch authenticated role so we can grant additional rights
+  const authRole = await strapi.db.query('plugin::users-permissions.role').findOne({
+    where: {
+      type: 'authenticated',
     },
   });
 
@@ -50,7 +67,7 @@ async function setPublicPermissions(newPermissions) {
   Object.keys(newPermissions).map((controller) => {
     const actions = newPermissions[controller];
     const permissionsToCreate = actions.map((action) => {
-      return strapi.query('plugin::users-permissions.permission').create({
+      return strapi.db.query('plugin::users-permissions.permission').create({
         data: {
           action: `api::${controller}.${controller}.${action}`,
           role: publicRole.id,
@@ -59,6 +76,21 @@ async function setPublicPermissions(newPermissions) {
     });
     allPermissionsToCreate.push(...permissionsToCreate);
   });
+
+  // additionally give authenticated users CRUD on skills (and ability to fetch their own)
+  if (authRole) {
+    ['find', 'findOne', 'create', 'update', 'delete', 'me'].forEach((action) => {
+      allPermissionsToCreate.push(
+        strapi.db.query('plugin::users-permissions.permission').create({
+          data: {
+            action: `api::skill.skill.${action}`,
+            role: authRole.id,
+          },
+        })
+      );
+    });
+  }
+
   await Promise.all(allPermissionsToCreate);
 }
 
@@ -73,6 +105,9 @@ async function main() {
 
   const appContext = await compileStrapi();
   const app = await createStrapi(appContext).load();
+
+  // make the loaded instance available to helper functions
+  strapi = app;
 
   app.log.level = 'error';
 

@@ -21,6 +21,12 @@
     "description": {
       "type": "text"
     },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
     "coverImageUrl": {
       "type": "string"
     },
@@ -46,6 +52,28 @@
       "relation": "oneToMany",
       "target": "api::review.review",
       "mappedBy": "skill"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "approved", "rejected"],
+      "default": "pending",
+      "required": true
+    },
+    "rejectionReason": {
+      "type": "text"
+    },
+    "baseSkill": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::base-skill.base-skill"
+    },
+    "proposedBaseSkillName": {
+      "type": "string",
+      "description": "If user wants to add a new base skill type"
+    },
+    "proposedCategoryName": {
+      "type": "string",
+      "description": "If user wants to add a new category"
     },
     "createdBy": {
       "type": "relation",

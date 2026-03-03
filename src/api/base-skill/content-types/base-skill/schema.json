@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "base_skills",
+  "info": {
+    "singularName": "base-skill",
+    "pluralName": "base-skills",
+    "displayName": "Base Skill",
+    "description": "Pre-defined skill types that users can offer"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category"
+    }
+  }
+}
